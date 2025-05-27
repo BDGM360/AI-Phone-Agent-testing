@@ -1,0 +1,29 @@
+{
+    "version": 2,
+    "builds": [
+        {
+            "src": "app.py",
+            "use": "@vercel/python",
+            "config": {
+                "runtime": "python3.11",
+                "maxLambdaSize": "15mb",
+                "handler": "app.app"
+            }
+        }
+    ],
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "app.py",
+            "headers": {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+                "Access-Control-Allow-Headers": "X-Requested-With, Content-Type, Accept, Authorization"
+            }
+        }
+    ],
+    "env": {
+        "PYTHONPATH": ".",
+        "FLASK_ENV": "production"
+    }
+}
