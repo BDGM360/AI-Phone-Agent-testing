@@ -30,10 +30,8 @@ Copy `env.example` to `.env` and configure the following variables:
 ### Application Settings
 - `ALLOWED_ORIGINS`: Comma-separated list of allowed origins for CORS
 
-
-**Important**: This project must have a public domain to make the AI functionality work correctly. Recommend vercel to test the project.
 ## Local Development
-
+**Important**: This project must have a public domain to make the AI functionality work correctly. Recommend vercel to test the project.
 1. Create and configure `.env` file:
    ```bash
    cp env.example .env
