@@ -1,7 +1,6 @@
 ## Build an AI Phone Agent with Agora ConvoAI and SIP Gateway
 
-![Derek](https://miro.medium.com/v2/resize:fill:64:64/1*YqlAbkszpPwYZVzcyZFAXA.jpeg)
-(https://medium.com/@derek_76692?source=post_page---byline--bca609a97775---------------------------------------)
+![Derek](https://miro.medium.com/v2/resize:fill:64:64/1*YqlAbkszpPwYZVzcyZFAXA.jpeg)(https://medium.com/@derek_76692?source=post_page---byline--bca609a97775---------------------------------------)
 
 
 In many industries, the phone remains the most trusted and natural way for users to seek help , calling about a technical issue, an appointment, or something far more personal. An interesting case that I learned last week in Manila is **tarot-based emotional counseling**. Many users prefer calling into a traditional hotline to receive private, empathetic advice from a tarot reader, especially when they feel vulnerable or simply want a more intimate experience.
