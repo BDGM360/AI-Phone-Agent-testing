@@ -122,6 +122,8 @@ The ConvoAI agent is configured with:
 - Voice settings via ElevenLabs
 - ASR (Automatic Speech Recognition) settings
 
+If you need other LLM and TTS vendors, please check the Agora officical document https://docs.agora.io/en/conversational-ai/overview/product-overview and modify the file AI-PHONE-AGENT/routes/webhook_routes.py accordingly.
+
 ## Security Notes
 
 - Never commit `.env` file with real credentials
@@ -136,4 +138,29 @@ If you encounter issues:
 1. Check that all environment variables are correctly set
 2. Verify that your Agora account has PSTN capabilities enabled
 3. Ensure your OpenAI and ElevenLabs API keys are valid
-4. Check the server logs for detailed error messages
+4. Ensure you have configured the Notification for your project
+5. Check the server logs for detailed error messages
+
+### Logging Information
+
+The application logs the following information to assist with troubleshooting:
+
+1. **Webhook Notifications**:
+   - `Received webhook notification`: Full JSON payload of incoming webhook
+   - `Webhook processing result`: Final processing status
+
+2. **ConvoAI Operations**:
+   - `ConvoAI START request`: URL and payload for ConvoAI start request
+   - `ConvoAI START response`: Status code and response body
+   - `ConvoAI successfully started`: Agent ID and channel name when successful
+   - `ConvoAI STOP request`: URL for ConvoAI stop request
+   - `ConvoAI STOP response`: Status code and response body
+
+3. **Error Handling**:
+   - All errors are logged with stack traces
+   - API request failures include status codes and error messages
+
+To view logs in Vercel:
+1. Go to your project dashboard
+2. Navigate to the "Logs" section
+3. Filter by "Function" to see server-side logs

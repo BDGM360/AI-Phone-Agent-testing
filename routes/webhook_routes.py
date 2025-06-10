@@ -16,7 +16,6 @@ Config.validate_config()
 # Store notifications in memory (will be cleared on server restart)
 notifications = []
 processed_notice_ids = set()  # For deduplication
-convo_ai_active = False  # Track ConvoAI state
 current_agent_id = None  # Store the current agent ID
 
 def is_valid_pstn_event(data):
@@ -40,10 +39,10 @@ def handle_convo_ai(action, channel_name=None):
             url = f"{Config.AGORA_AI_ENDPOINT}/projects/{Config.APP_ID}/join"
             
             payload = {
-                "name": "pstnai",
+                "name": f"{channel_name}_agent",
                 "properties": {
                     "channel": channel_name,
-                    "token": generate_token(channel_name, "222"),  # Generate token for agent with fixed uid 222
+                    "token": generate_token(channel_name, Config.AGENT_UID),  # Generate token for agent with fixed uid 222
                     "agent_rtc_uid": Config.AGENT_UID,
                     "remote_rtc_uids": [Config.DEFAULT_UID],
                     "idle_timeout": 120,
@@ -136,8 +135,12 @@ Remember to:
             response = requests.post(url, headers=headers, json=payload)
             response_data = response.json()
             
+            print(f"ConvoAI START request - URL: {url}, Payload: {json.dumps(payload, indent=2)}")
+            print(f"ConvoAI START response - Status: {response.status_code}, Body: {json.dumps(response_data, indent=2)}")
+            
             if response.status_code == 200 and response_data.get('status') == 'RUNNING':
                 current_agent_id = response_data.get('agent_id')
+                print(f"ConvoAI successfully started - Agent ID: {current_agent_id}, Channel: {channel_name}")
                 return True
             return False
             
@@ -155,6 +158,11 @@ Remember to:
             }
 
             response = requests.post(url, headers=headers, data="")
+            response_data = response.json() if response.content else {}
+            
+            print(f"ConvoAI STOP request - URL: {url}")
+            print(f"ConvoAI STOP response - Status: {response.status_code}, Body: {json.dumps(response_data, indent=2)}")
+            
             if response.status_code == 200:
                 current_agent_id = None
                 return True
@@ -169,12 +177,13 @@ Remember to:
 def webhook():
     """Webhook endpoint for notifications"""
     try:
-        global convo_ai_active
         data = request.json
+        print(f"Received webhook notification: {json.dumps(data, indent=2)}")
         notice_id = data.get('noticeId')
         
         # Deduplication check
         if notice_id in processed_notice_ids:
+            print(f"Duplicate notification detected - Notice ID: {notice_id}, Skip processing!")
             return jsonify({
                 "status": "skipped",
                 "message": "Duplicate notification"
@@ -198,16 +207,14 @@ def webhook():
         event_type = data.get('eventType')
         if event_type in [103, 104] and is_valid_pstn_event(data):
             channel_name = data.get('payload', {}).get('channelName', '')
-            if event_type == 103 and not convo_ai_active and channel_name:
-                # Start ConvoAI only if it's not already active
+            if event_type == 103 and channel_name:
+                # Start ConvoAI
                 if handle_convo_ai("start", channel_name):
-                    convo_ai_active = True
                     notification['data']['convo_ai_action'] = "started"
                     notification['processed'] = True
-            elif event_type == 104 and convo_ai_active:
-                # Stop ConvoAI if it's active
+            elif event_type == 104:
+                # Stop ConvoAI
                 if handle_convo_ai("stop"):
-                    convo_ai_active = False
                     notification['data']['convo_ai_action'] = "stopped"
                     notification['processed'] = True
         
@@ -218,10 +225,12 @@ def webhook():
             if len(notifications) > 50:
                 notifications.pop()
         
-        return jsonify({
+        result = {
             "status": "received",
             "message": "Webhook processed successfully"
-        }), 200
+        }
+        print(f"Webhook processing result: {json.dumps(result, indent=2)}")
+        return jsonify(result), 200
 
     except Exception as e:
         return jsonify({
