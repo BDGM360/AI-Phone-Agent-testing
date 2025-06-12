@@ -59,15 +59,14 @@ Copy `env.example` to `.env` and configure the following variables:
    npm i -g vercel
    ```
 
-2. Configure environment variables in Vercel:
-   - Go to your project settings in Vercel dashboard
-   - Add all required environment variables from `env.example`
-
-3. Deploy:
+2. Deploy:
    ```bash
    vercel --prod
    ```
-
+3. Configure environment variables in Vercel:
+   - Go to your project settings in Vercel dashboard
+   - Add all required environment variables from `env.example`
+   
 ## PSTN Integration
 
 The application provides a web UI for initiating PSTN calls through Agora's service. The PSTN endpoint supports the following regions:

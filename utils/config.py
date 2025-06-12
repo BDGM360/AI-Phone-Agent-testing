@@ -33,7 +33,7 @@ class Config:
     def validate_config(cls):
         """Validate that all required environment variables are set"""
         required_vars = [
-            'APP_ID', 'APP_CERTIFICATE', 'AGORA_API_KEY', 'AGORA_API_SECRET',
+            'APP_ID', 'APP_CERTIFICATE', 'AGORA_API_KEY',
             'PSTN_AUTH', 'OPENAI_API_KEY', 'ELEVENLABS_API_KEY',
             'ELEVENLABS_VOICE_ID'
         ]
