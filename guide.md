@@ -1,8 +1,8 @@
 ## Build an AI Phone Agent with Agora ConvoAI and SIP Gateway
 
-![Derek](https://miro.medium.com/v2/resize:fill:64:64/1*YqlAbkszpPwYZVzcyZFAXA.jpeg)(https://medium.com/@derek_76692?source=post_page---byline--bca609a97775---------------------------------------)
+![Derek](https://miro.medium.com/v2/resize:fill:64:64/1*YqlAbkszpPwYZVzcyZFAXA.jpeg) [Medium Artical](https://medium.com/@derek_76692?source=post_page---byline--bca609a97775---------------------------------------)
 
-
+![ConvoAI-Phone-Agent](./assets/phone-ai-agent.jpeg)
 In many industries, the phone remains the most trusted and natural way for users to seek help , calling about a technical issue, an appointment, or something far more personal. An interesting case that I learned last week in Manila is **tarot-based emotional counseling**. Many users prefer calling into a traditional hotline to receive private, empathetic advice from a tarot reader, especially when they feel vulnerable or simply want a more intimate experience.
 
 That’s where this solution comes in: combining **SIP Gateway** infrastructure with **Agora** **ConvoAI**, a customizable conversational AI platform powered by LLMs and real-time voice features. Whether you’re building a **Tarot emotional counseling bot**, or a **24/7 support agent**, this architecture gives your users instant access to AI via a simple phone call — no apps, no downloads, no complexity.
@@ -61,6 +61,7 @@ Example JSON payload:
 ## 3\. Set Up Webhook Notifications
 
 In the Agora Console, configure a webhook to receive event types `103` (join) and `104` (leave).
+![console-notification](./assets/ncs-console.png)
 
 These events let your server know when to start or stop the AI agent.
 
