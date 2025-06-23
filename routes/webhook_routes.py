@@ -10,6 +10,17 @@ from utils.token_generator import generate_token
 
 webhook_bp = Blueprint('webhook', __name__)
 
+# ─── 1) Health‐check para Agora Console ───
+@webhook_bp.route('/webhook', methods=['GET'])
+def health_check():
+    """
+    Endpoint que devuelve 200 OK al GET para el health check de Agora.
+    """
+    return jsonify({"status": "ok"}), 200
+
+
+
+
 # Validate configuration on module load
 Config.validate_config()
 
