@@ -1,10 +1,3 @@
-import os
-
-# Solo en desarrollo local usa python-dotenv
-if os.getenv("VERCEL") is None:   # Vercel define esta var en su entorno
-    from dotenv import load_dotenv
-    load_dotenv()                 # cargará tu .env local si existe
-
 
 from flask import Flask, render_template, send_from_directory
 from flask_cors import CORS
