@@ -1,3 +1,21 @@
+import os
+from pathlib import Path
+
+# ─── Cargar credenciales desde archivo externo ───
+# Ajusta este path según dónde guardaste secrets.txt
+secrets_path = Path.home() / "secrets" / "secrets.txt"
+
+if secrets_path.exists():
+    for line in secrets_path.read_text().splitlines():
+        if not line.strip() or line.strip().startswith("#"):
+            continue
+        key, val = line.split("=", 1)
+        # No sobreescribimos vars ya definidas
+        os.environ.setdefault(key.strip(), val.strip())
+else:
+    raise FileNotFoundError(f"No se encontró el archivo de secretos en: {secrets_path}")
+
+
 from flask import Flask, render_template, send_from_directory
 from flask_cors import CORS
 from utils.config import Config
